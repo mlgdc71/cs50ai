@@ -54,7 +54,7 @@ def load_data(directory):
 def main():
     if len(sys.argv) > 2:
         sys.exit("Usage: python degrees.py [directory]")
-    directory = sys.argv[1] if len(sys.argv) == 2 else "small"
+    directory = sys.argv[1] if len(sys.argv) == 2 else "large"
 
     # Load data from files into memory
     print("Loading data...")
@@ -90,11 +90,11 @@ def shortest_path(source, target):
 
     If no possible path, returns None.
     """
-    start = Node(state=(0, source), parent=None, action=None)
+    start = Node(state=(0, source), parent=None, action=None) # source is only a personid
     frontier = QueueFrontier()
     frontier.add(start)
 
-    explored = set()
+    exploredp = set()
 
     while True:
         if frontier.empty():
@@ -108,10 +108,10 @@ def shortest_path(source, target):
             result.reverse()
             return result
 
-        explored.add(node.state)
-        for state in neighbors_for_person(node.state[1]):
-            if not frontier.contains_state(state) and state not in explored:
-                child = Node(state=state, parent=node, action=None)
+        exploredp.add(node.state[1]) # only check for people not movies
+        for candidate in neighbors_for_person(node.state[1]): # input for func is only a personid
+            if not frontier.contains_state(candidate[1]) and candidate[1] not in exploredp:
+                child = Node(state=candidate, parent=node, action=None)
                 frontier.add(child)
 
 
