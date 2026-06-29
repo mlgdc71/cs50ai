@@ -110,7 +110,7 @@ def shortest_path(source, target):
 
         exploredp.add(node.state[1]) # only check for people not movies
         for candidate in neighbors_for_person(node.state[1]): # input for func is only a personid
-            if not frontier.contains_state(candidate[1]) and candidate[1] not in exploredp:
+            if candidate[1] not in exploredp:
                 child = Node(state=candidate, parent=node, action=None)
                 frontier.add(child)
 
