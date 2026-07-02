@@ -68,26 +68,20 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    # check row, column, one diagonal, one antidiagonal
-    # first row and column, all function
+    # row + column
+    diagonals = []
+    for i in range(3):
+        coord = board[i][i], board[i][2 - i]
+        
 
-    # def helper(board):
-    for row in board and zip(*board):
-        if all(instance == X for instance in row):
+    for row in board + list(zip(*board)):
+        if all(instance == X for instance in (row or diagonals)) == True:
             return X
-        elif all(instance == O for instance in row):
+        elif all(instance == O for instance in (row or diagonals)) == True:
             return O
-    # if helper(board) or helper(zip(*board)) == X:
-    #     return X
-    # elif helper(board) or helper(zip(*board)) == O:
-    #     return O
 
-    # for j in board:
-    #     if all(X = board[i][j] == X for i in board[i]) = True:
-    #         return X
-    #     if all(O = board[i][j] == O for i in board[i]) = True:
-    #         return O
-
+    # diagonal + antidiagonal
+    # wait what if we somehow turn the diagonal into a row and put it in the above
 
 
 def terminal(board):
