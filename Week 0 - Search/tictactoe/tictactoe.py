@@ -3,7 +3,6 @@ Tic Tac Toe Player
 """
 
 import math
-
 from pygame import colordict
 
 X = "X"
@@ -56,7 +55,12 @@ def result(board, action):
     """
     Returns the board that results from making move (i, j) on the board.
     """
-    # check row, column, one diagonal, one antidiagonal
+    i, j = action
+    if player(board) == X:
+        board[i][j] = X
+    else:
+        board[i][j] = O
+    return board
 
 
 
@@ -64,7 +68,26 @@ def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    raise NotImplementedError
+    # check row, column, one diagonal, one antidiagonal
+    # first row and column, all function
+
+    # def helper(board):
+    for row in board and zip(*board):
+        if all(instance == X for instance in row):
+            return X
+        elif all(instance == O for instance in row):
+            return O
+    # if helper(board) or helper(zip(*board)) == X:
+    #     return X
+    # elif helper(board) or helper(zip(*board)) == O:
+    #     return O
+
+    # for j in board:
+    #     if all(X = board[i][j] == X for i in board[i]) = True:
+    #         return X
+    #     if all(O = board[i][j] == O for i in board[i]) = True:
+    #         return O
+
 
 
 def terminal(board):
