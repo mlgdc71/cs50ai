@@ -50,7 +50,7 @@ def actions(board):
                 actions.add((i, j))
     return actions
 
-
+import copy # standard python module
 def result(board, action):
     """
     Returns the board that results from making move (i, j) on the board.
