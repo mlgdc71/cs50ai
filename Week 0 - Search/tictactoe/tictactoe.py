@@ -79,7 +79,7 @@ def winner(board):
 
     total = board + list(zip(*board)) + anti + diagonals
 
-    for i in total
+    for i in total:
         if all(instance == X for instance in i):
             return X
         elif all(instance == O for instance in i):
@@ -116,17 +116,30 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
+    # class action():
+    #     def __init__(self, value):
+    #         self.value = value
+
     if player(board) == O:
         if terminal(board):
             return utility(board)
         v = math.inf
+        # for action in actions(board):
+        #     if min(v, max(utility(result(board, action))) == -1:
+        #         return action
         for action in actions(board):
-            v = min(v, max(utility(result(board, action)))
-        return v
+            if utility(result(board, action)) < v:
+                v = utility(result(board, action))
+                best_action = action
+
+            return best_action
     else:
         if terminal(board):
             return utility(board)
         v = -math.inf
         for action in actions(board):
-            v = max(v, min(utility(result(board, action)))
-        return v
+            if max(v, min(utility(result(board, action))) == 1:
+                return action
+
+
+
