@@ -77,7 +77,7 @@ def winner(board):
         diagonals.append(coord)
         anti.append(anticoord)
 
-    total = board + list(zip(*board)) + anti + diagonals
+    total = board + list(zip(*board)) + [anti] + [diagonals] # must all be lists to be added together, cells dont cut it
 
     for i in total:
         if all(instance == X for instance in i):
