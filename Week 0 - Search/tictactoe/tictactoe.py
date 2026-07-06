@@ -70,19 +70,23 @@ def winner(board):
     """
     # row + column
     diagonals = []
+    anti = []
     for i in range(3):
-        coord = board[i][i], board[i][2 - i]
-        
+        coord = board[i][i]
+        anticoord = board[i][2 - i]
+        diagonals.append(coord)
+        anti.append(anticoord)
 
-    for row in board + list(zip(*board)):
-        if all(instance == X for instance in (row or diagonals)) == True:
+    total = board + list(zip(*board)) + anti + diagonals
+
+    for i in total
+        if all(instance == X for instance in i):
             return X
-        elif all(instance == O for instance in (row or diagonals)) == True:
+        elif all(instance == O for instance in i):
             return O
 
     # diagonal + antidiagonal
     # wait what if we somehow turn the diagonal into a row and put it in the above
-
 
 def terminal(board):
     """
