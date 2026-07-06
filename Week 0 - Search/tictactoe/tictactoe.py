@@ -56,12 +56,12 @@ def result(board, action):
     Returns the board that results from making move (i, j) on the board.
     """
     i, j = action
+    board = copy.deepcopy(board)
     if player(board) == X:
         board[i][j] = X
     else:
         board[i][j] = O
     return board
-
 
 
 def winner(board):
@@ -84,8 +84,7 @@ def winner(board):
             return X
         elif all(instance == O for instance in i):
             return O
-        else:
-            return None
+    return None
 
     # diagonal + antidiagonal
     # wait what if we somehow turn the diagonal into a row and put it in the above
@@ -95,9 +94,11 @@ def terminal(board):
     Returns True if game is over, False otherwise.
     """
     if winner(board) is not None:
-        return False
-    else:
         return True
+    elif sum(i.count(EMPTY) for i in board) == 0:
+        return True
+    else:
+        return False
 
 
 def utility(board):
@@ -116,34 +117,13 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-    # class action():
-    #     def __init__(self, value):
-    #         self.value = value
-
-    # if player(board) == O:
-    #     if terminal(board):
-    #         return utility(board)
-    #     v = math.inf
-    #     for action in actions(board):
-    #         if utility(result(board, action)) < v:
-    #             v = utility(result(board, action))
-    #             best_action = action
-    #
-    #         return best_action
-    # else:
-    #     if terminal(board):
-    #         return utility(board)
-    #     v = -math.inf
-    #     for action in actions(board):
-    #         if max(v, min(utility(result(board, action))) == 1:
-    #             return action
 
     def minval(board):
         if terminal(board):
             return utility(board)
         v = math.inf
         for action in actions(board):
-            v = min(v, maxval(result(board, action))))
+            v = min(v, maxval(result(board, action)))
         return v
 
     def maxval(board):
