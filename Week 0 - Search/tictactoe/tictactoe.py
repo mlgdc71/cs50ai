@@ -84,6 +84,8 @@ def winner(board):
             return X
         elif all(instance == O for instance in i):
             return O
+        else:
+            return None
 
     # diagonal + antidiagonal
     # wait what if we somehow turn the diagonal into a row and put it in the above
@@ -92,14 +94,22 @@ def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    raise NotImplementedError
+    if winner(board) is not None:
+        return False
+    else:
+        return True
 
 
 def utility(board):
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
     """
-    raise NotImplementedError
+    if winner(board) == X:
+        return 1
+    elif winner(board) == O:
+        return -1
+    else:
+        return 0
 
 
 def minimax(board):
