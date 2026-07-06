@@ -116,6 +116,28 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
+    # class action():
+    #     def __init__(self, value):
+    #         self.value = value
+
+    # if player(board) == O:
+    #     if terminal(board):
+    #         return utility(board)
+    #     v = math.inf
+    #     for action in actions(board):
+    #         if utility(result(board, action)) < v:
+    #             v = utility(result(board, action))
+    #             best_action = action
+    #
+    #         return best_action
+    # else:
+    #     if terminal(board):
+    #         return utility(board)
+    #     v = -math.inf
+    #     for action in actions(board):
+    #         if max(v, min(utility(result(board, action))) == 1:
+    #             return action
+
     def minval(board):
         if terminal(board):
             return utility(board)
@@ -127,10 +149,27 @@ def minimax(board):
     def maxval(board):
         if terminal(board):
             return utility(board)
-        v = math.inf
+        v = -math.inf
         for action in actions(board):
             v = max(v, minval(result(board, action)))
-        return v
+        return v # val funcs return a number ∈ {0,-1,1}
 
+    if player(board) == X: # must be set outside the loop or else v will reset back to infinity values
+        v = -math.inf
+    else:
+        v = math.inf
+
+    for action in actions(board):
+        if player(board) == O:
+            choose = minval(result(board, action)) # starts in the perspective of X
+            if choose < v:
+                v = choose
+                best_action = action
+        else:
+            choose = maxval(result(board, action))
+            if choose > v:
+                v = choose
+                best_action = action
+    return best_action
 
 
