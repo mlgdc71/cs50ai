@@ -24,7 +24,8 @@ def player(board):
     Returns player who has the next turn on a board.
     """
     xcount = sum(instance.count(X) for instance in board)
-    if xcount % 2 == 0:
+    ocount = sum(instance.count(O) for instance in board)
+    if xcount == 0 or ocount > xcount:
         return X
     else:
         return O
@@ -56,12 +57,12 @@ def result(board, action):
     Returns the board that results from making move (i, j) on the board.
     """
     i, j = action
-    board = copy.deepcopy(board)
-    if player(board) == X:
-        board[i][j] = X
+    copies = copy.deepcopy(board) # mutation of original if not deepcopy
+    if player(copies) == X:
+        copies[i][j] = X
     else:
-        board[i][j] = O
-    return board
+        copies[i][j] = O
+    return copies
 
 
 def winner(board):
@@ -117,7 +118,8 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-
+    print("board state:", board)
+    print("player:", player(board))
     def minval(board):
         if terminal(board):
             return utility(board)
@@ -134,10 +136,10 @@ def minimax(board):
             v = max(v, minval(result(board, action)))
         return v # val funcs return a number ∈ {0,-1,1}
 
-    if player(board) == X: # must be set outside the loop or else v will reset back to infinity values
-        v = -math.inf
-    else:
+    if player(board) == O: # must be set outside the loop or else v will reset back to infinity values
         v = math.inf
+    else:
+        v = -math.inf
 
     for action in actions(board):
         if player(board) == O:
@@ -151,5 +153,3 @@ def minimax(board):
                 v = choose
                 best_action = action
     return best_action
-
-
