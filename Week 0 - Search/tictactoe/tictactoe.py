@@ -25,7 +25,7 @@ def player(board):
     """
     xcount = sum(instance.count(X) for instance in board)
     ocount = sum(instance.count(O) for instance in board)
-    if xcount == 0 or ocount > xcount:
+    if xcount == 0 or ocount >= xcount:
         return X
     else:
         return O
@@ -118,8 +118,6 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-    print("board state:", board)
-    print("player:", player(board))
     def minval(board):
         if terminal(board):
             return utility(board)
@@ -143,12 +141,12 @@ def minimax(board):
 
     for action in actions(board):
         if player(board) == O:
-            choose = minval(result(board, action)) # starts in the perspective of X
+            choose = maxval(result(board, action)) # starts in the perspective of X
             if choose < v:
                 v = choose
                 best_action = action
         else:
-            choose = maxval(result(board, action))
+            choose = minval(result(board, action))
             if choose > v:
                 v = choose
                 best_action = action
