@@ -3,7 +3,6 @@ Tic Tac Toe Player
 """
 
 import math
-from pygame import colordict
 
 X = "X"
 O = "O"
@@ -57,12 +56,25 @@ def result(board, action):
     Returns the board that results from making move (i, j) on the board.
     """
     i, j = action
-    copies = copy.deepcopy(board) # mutation of original if not deepcopy
-    if player(copies) == X:
-        copies[i][j] = X
+    copies = copy.deepcopy(board)
+    def ispossible(action):
+        if copies[action[0]][action[1]] == EMPTY:
+            return True
+        else:
+             return False
+
+    if i<0 or i>=3 or j<0 or j>=3:
+        raise Exception("Invalid move")
+
+    if ispossible(action):
+        if player(copies) == X:
+            copies[i][j] = X
+        else:
+            copies[i][j] = O
+        return copies
     else:
-        copies[i][j] = O
-    return copies
+        raise Exception("Invalid move")
+
 
 
 def winner(board):
@@ -134,10 +146,10 @@ def minimax(board):
             v = max(v, minval(result(board, action)))
         return v # val funcs return a number ∈ {0,-1,1}
 
-    if player(board) == O: # must be set outside the loop or else v will reset back to infinity values
-        v = math.inf
-    else:
+    if player(board) == X: # must be set outside the loop or else v will reset back to infinity values
         v = -math.inf
+    else:
+        v = math.inf
 
     for action in actions(board):
         if player(board) == O:
@@ -150,4 +162,7 @@ def minimax(board):
             if choose > v:
                 v = choose
                 best_action = action
+
+    if winner(board) == X:
+        return None
     return best_action
